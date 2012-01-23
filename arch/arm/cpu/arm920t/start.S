@@ -39,6 +39,7 @@
 
 .globl _start
 _start:	b	start_code
+#ifndef CONFIG_NAND_SPL
 	ldr	pc, _undefined_instruction
 	ldr	pc, _software_interrupt
 	ldr	pc, _prefetch_abort
@@ -56,7 +57,10 @@ _irq:			.word irq
 _fiq:			.word fiq
 
 	.balignl 16,0xdeadbeef
-
+#else
+/* TODO: Why is that? */
+    . = _start + 64 
+#endif
 
 /*
  *************************************************************************
@@ -182,6 +186,7 @@ copyex:
 	bl	cpu_init_crit
 #endif
 
+        b .
 /* Set stackpointer in internal RAM to call board_init_f */
 call_board_init_f:
 	ldr	sp, =(CONFIG_SYS_INIT_SP_ADDR)
@@ -266,6 +271,8 @@ clear_bss:
 #ifndef CONFIG_SPL_BUILD
 	ldr	r0, _bss_start_ofs
 	ldr	r1, _bss_end_ofs
+	cmp     r0, r1               /* No bss, end clear_bss */
+	beq      clbss_end
 	mov	r4, r6			/* reloc addr */
 	add	r0, r0, r4
 	add	r1, r1, r4
@@ -278,8 +285,11 @@ clbss_l:cmp	r0, r1			/* clear loop... */
 	b	clbss_l
 clbss_e:
 
+clbss_end:
+#ifndef CONFIG_NAND_SPL
 	bl coloured_LED_init
 	bl red_led_on
+#endif
 #endif
 
 /*
@@ -358,6 +368,7 @@ cpu_init_crit:
 	mov	pc, lr
 #endif /* CONFIG_SKIP_LOWLEVEL_INIT */
 
+#ifndef CONFIG_NAND_SPL
 /*
  *************************************************************************
  *
@@ -520,3 +531,4 @@ fiq:
 	bl	do_fiq
 
 #endif
+#endif /* CONFIG_NAND_SPL */

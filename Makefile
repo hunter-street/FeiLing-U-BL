@@ -750,6 +750,23 @@ smdk6400_config	:	unconfig
 	fi
 	@$(MKCONFIG) smdk6400 arm arm1176 smdk6400 samsung s3c64xx
 	@echo "CONFIG_NAND_U_BOOT = y" >> $(obj)include/config.mk
+	
+#########################################################################
+## ARM920 Systems
+#########################################################################
+fl2440_noUSB_config	\
+fl2440_config	:	unconfig
+	@mkdir -p $(obj)include $(obj)board/samsung/fl2440
+	@mkdir -p $(obj)nand_spl/board/samsung/fl2440
+	@echo "#define CONFIG_NAND_U_BOOT" > $(obj)include/config.h
+	@echo "CONFIG_NAND_U_BOOT = y" >> $(obj)include/config.mk
+	@if [ -z "$(findstring fl2440_noUSB_config,$@)" ]; then			\
+		echo "RAM_TEXT = 0x57e00000" >> $(obj)board/samsung/fl2440/config.tmp;\
+	else										\
+		echo "RAM_TEXT = 0x32000000" >> $(obj)board/samsung/fl2440/config.tmp;\
+	fi
+	@$(MKCONFIG) fl2440 arm arm920t fl2440 samsung s3c24x0
+	@echo "CONFIG_NAND_U_BOOT = y" >> $(obj)include/config.mk	
 
 #########################################################################
 #########################################################################

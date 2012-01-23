@@ -41,7 +41,7 @@
 /* in the early stage of NAND flash booting, printf() is not available */
 #define printf(fmt, args...)
 
-static void nand_read_buf(struct mtd_info *mtd, u_char *buf, int len)
+void nand_read_buf(struct mtd_info *mtd, u_char *buf, int len)
 {
 	int i;
 	struct nand_chip *this = mtd->priv;
