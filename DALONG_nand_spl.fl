@@ -1,0 +1,8 @@
+/home/CORPUSERS/23059917/study/eldk/usr/src/u-boot/board/samsung/fl2440/fl2440.c
+/home/CORPUSERS/23059917/study/eldk/usr/src/u-boot/board/samsung/fl2440/fl2440_nand_spl.c
+/home/CORPUSERS/23059917/study/eldk/usr/src/u-boot/board/samsung/fl2440/smdk2410.c
+/home/CORPUSERS/23059917/study/eldk/usr/src/u-boot/board/samsung/fl2440/lowlevel_init.S
+/home/CORPUSERS/23059917/study/eldk/usr/src/u-boot/nand_spl/nand_boot.c
+/home/CORPUSERS/23059917/study/eldk/usr/src/u-boot/include/configs/fl2440.h
+/home/CORPUSERS/23059917/study/eldk/usr/src/u-boot/drivers/mtd/nand/s3c2440_nand.c
+/home/CORPUSERS/23059917/study/eldk/usr/src/u-boot/include/nand.h
