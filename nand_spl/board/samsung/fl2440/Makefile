@@ -38,7 +38,7 @@ AFLAGS	+= -DCONFIG_NAND_SPL
 CFLAGS	+= -DCONFIG_NAND_SPL -ffunction-sections
 
 SOBJS	= start.o lowlevel_init.o
-COBJS	= nand_boot.o nand_ecc.o s3c2440_nand.o fl2440_nand_spl.o nand_base.o
+COBJS	= nand_boot.o s3c2440_nand.o fl2440_nand_spl.o 
 
 SRCS	:= $(addprefix $(obj),$(SOBJS:.o=.S) $(COBJS:.o=.c))
 OBJS	:= $(addprefix $(obj),$(SOBJS) $(COBJS))
@@ -82,9 +82,9 @@ $(obj)nand_boot.c:
 	@ln -s $(TOPDIR)/nand_spl/nand_boot.c $@
 
 # from drivers/mtd/nand directory
-$(obj)nand_ecc.c:
-	@rm -f $@
-	@ln -s $(TOPDIR)/drivers/mtd/nand/nand_ecc.c $@
+#$(obj)nand_ecc.c:
+#	@rm -f $@
+#	@ln -s $(TOPDIR)/drivers/mtd/nand/nand_ecc.c $@
 
 $(obj)s3c2440_nand.c:
 	@rm -f $@
@@ -94,9 +94,9 @@ $(obj)fl2440_nand_spl.c:
 	@rm -f $@
 	@ln -s $(TOPDIR)/board/samsung/fl2440/fl2440_nand_spl.c $@
 
-$(obj)nand_base.c:
-	@rm -f $@
-	@ln -s $(TOPDIR)/drivers/mtd/nand/nand_base.c $@
+#$(obj)nand_base.c:
+#	@rm -f $@
+#	@ln -s $(TOPDIR)/drivers/mtd/nand/nand_base.c $@
 #########################################################################
 
 $(obj)%.o:	$(obj)%.S
