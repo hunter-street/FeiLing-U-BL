@@ -39,6 +39,7 @@
 
 .globl _start
 _start:	b	start_code
+#ifndef CONFIG_NAND_SPL
 	ldr	pc, _undefined_instruction
 	ldr	pc, _software_interrupt
 	ldr	pc, _prefetch_abort
@@ -56,7 +57,10 @@ _irq:			.word irq
 _fiq:			.word fiq
 
 	.balignl 16,0xdeadbeef
-
+#else
+/* TODO: Why is that? */
+    . = _start + 64 
+#endif
 
 /*
  *************************************************************************
@@ -276,8 +280,10 @@ clbss_l:str	r2, [r0]		/* clear loop...		    */
 	cmp	r0, r1
 	bne	clbss_l
 
+#ifndef CONFIG_NAND_SPL
 	bl coloured_LED_init
 	bl red_led_on
+#endif
 #endif
 
 /*
@@ -356,6 +362,7 @@ cpu_init_crit:
 	mov	pc, lr
 #endif /* CONFIG_SKIP_LOWLEVEL_INIT */
 
+#ifndef CONFIG_NAND_SPL
 /*
  *************************************************************************
  *
@@ -518,3 +525,4 @@ fiq:
 	bl	do_fiq
 
 #endif
+#endif /* CONFIG_NAND_SPL */
