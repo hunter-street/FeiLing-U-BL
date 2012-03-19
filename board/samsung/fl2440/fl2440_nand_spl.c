@@ -34,7 +34,7 @@ void board_init_f(unsigned long bootflag)
 {
 /* TODO: Temporary fix for sp address in nand_spl */	
 #ifdef CONFIG_NAND_SPL
-	relocate_code(0x32000000, NULL,
+	relocate_code(0x31000000, NULL,
 			CONFIG_SYS_TEXT_BASE);
 #else	
 	relocate_code(CONFIG_SYS_TEXT_BASE - TOTAL_MALLOC_LEN, NULL,
