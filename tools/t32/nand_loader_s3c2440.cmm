@@ -1,0 +1,98 @@
+; S3C2440 NAND FLASH Programming CMM be offered by Dalong.
+; NAND FLASH(SAMSUNG, K9F1G08) is connected to CS2                      
+;
+; SDRAM            : 0x50000000
+; Command Register : 0x70200008   
+; Address Register : 0x7020000c 
+; Data Register    : 0x70200010
+; 
+; $Author: jjeong $
+; $Date: 2009-09-17 09:35:09 +0200 (Do, 17 Sep 2009) $
+; $Rev: 629 $
+
+  AREA.RESet
+  AREA
+  
+//SYStem configuration
+
+  // SYStem.CPU ARM920T
+  // ;SYStem.JC RTCK
+  // SYStem.Option resbreak off
+  // SYStem.Option enreset on
+  // SYStem.Option trst on
+
+  // SYStem.Attach
+  // Break
+  // map.res
+ // map.denyaccess 0x40000000--0x4FFFFFFF
+ // map.denyaccess  0x60000000--0x6FFFFFFF
+
+
+//  Register.Set cpsr (r(cpsr)&0xffffff00)|0xd3
+
+//base = 0x70000000 , size = 256MB
+// PER.Set C15:0x42F %LE %LONG 0x70000013           ; Peripheral Port Memory Remap Register Enable
+
+//Watchdog timer address
+  Data.Set SD:0x53000000 %LE %LONG 0x0                    ; Disable Watchdog
+//  Data.Set SD:0x7e00f120 %LE %LONG 0x0
+
+//NFCONF setting
+  Data.Set ASD:0x4E000000 %long 0x2227	
+
+//NFCONT setting
+  Data.Set ASD:0x4E000004 %long 0xc5
+
+//Call SDRAM initialization
+//  GOSUB sdram_init
+
+  Break.RESet
+
+  FLASHFILE.RESet
+  
+//FLASHFILE.Config <cmd_reg> <addr_reg> <io_reg>
+  FLASHFILE.Config 0x4E000008 0x4E00000C 0x4E000010
+
+// FLASHFILE.TARGET <code range> <data range> <Algorithm file>
+  FLASHFILE.TARGET 0x33000000++0x1FFF 0x33002000++0x1FFF /opt/t32/demo/arm/flash/byte/nand2g08.bin
+
+//Read FLASH Manufacture and Device ID
+  // FLASHFILE.GETID
+
+//Put a list of bad blocks into area window for 1Gbit (256MB) size
+  // FLASHFILE.GETBADBLOCK 0x0--0x7FFFFFF
+
+  DIALOG.YESNO "Program flash memory?"
+  ENTRY &progflash
+  IF &progflash 
+  (
+  //Erase NAND FLASH Main and Bad block inforamtion
+    FLASHFILE.ERASE 0x0--0x3FFFF  /EraseBadBlocks
+
+  //Skipped way 
+   //FLASHFILE.LOAD  D:\ee\FL2440\Bootloader\目标文件\2440bootV5.1.bin 0x0 
+   FLASHFILE.LOAD  ./nand_spl/u-boot-spl-16k.bin 0x0
+   //FLASHFILE.SAVE ./nand_spl/my_dump2.bin 0x0--0x1FFFF
+   
+    // ;FLASHFILE.LOADSPARE * 0x0 
+   
+  //Reserved block area way
+    // ;FLASHFILE.LOAD  * 0x0   /WriteBadBlocks
+    // ;FLASHFILE.LOADSPARE *  0x0   /WriteBadBlocks  
+  )
+
+  ENDDO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
