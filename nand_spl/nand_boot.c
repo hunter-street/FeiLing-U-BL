@@ -185,7 +185,12 @@ static int nand_read_page(struct mtd_info *mtd, int block, int page, uchar *dst)
 	uint8_t *p = dst;
 
 	nand_command(mtd, block, page, 0, NAND_CMD_READ0);
-
+#ifdef CONFIG__NAND_DISABLE_ECC_CORRECT
+               	for (i = 0; eccsteps; eccsteps--, i += eccbytes, p += eccsize) {
+		this->ecc.hwctl(mtd, NAND_ECC_READ);
+		this->read_buf(mtd, p, eccsize);
+	}
+#else
 	for (i = 0; eccsteps; eccsteps--, i += eccbytes, p += eccsize) {
 		this->ecc.hwctl(mtd, NAND_ECC_READ);
 		this->read_buf(mtd, p, eccsize);
@@ -207,7 +212,7 @@ static int nand_read_page(struct mtd_info *mtd, int block, int page, uchar *dst)
 		 */
 		this->ecc.correct(mtd, p, &ecc_code[i], &ecc_calc[i]);
 	}
-
+#endif //CONFIG__NAND_DISABLE_ECC_CORRECT
 	return 0;
 }
 #endif /* #if defined(CONFIG_SYS_NAND_4BIT_HW_ECC_OOBFIRST) */

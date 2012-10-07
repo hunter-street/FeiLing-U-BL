@@ -213,6 +213,9 @@
 #define CONFIG_SYS_MAX_NAND_DEVICE	1
 #define NAND_MAX_CHIPS			1
 #define CONFIG_SYS_NAND_BASE		0x4E000000
+/* TODO: Temporary disabled HWECC */
+#define CONFIG__NAND_HWECC    /* s3c2440a supports HWECC */
+#define CONFIG__NAND_DISABLE_ECC_CORRECT
 #endif
 
 /*
