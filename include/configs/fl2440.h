@@ -222,7 +222,7 @@
  * FL2440 board specific data ported from smdk6400
  */
  /* base address for uboot */
-#define CONFIG_SYS_PHY_UBOOT_BASE	(CONFIG_SYS_SDRAM_BASE + 0x07e00000)
+#define CONFIG_SYS_PHY_UBOOT_BASE	(CONFIG_SYS_SDRAM_BASE + 0x02000000)
 /* NAND configuration ported from smdk6400.h*/
 //#define CONFIG_SYS_MAX_NAND_DEVICE	1
 //#define CONFIG_SYS_NAND_BASE		0x70200010
@@ -242,7 +242,7 @@
 /* NAND chip page size		*/
 #define CONFIG_SYS_NAND_PAGE_SIZE	2048
 /* NAND chip block size		*/
-#define CONFIG_SYS_NAND_BLOCK_SIZE	(128 * 1024)
+#define CONFIG_SYS_NAND_BLOCK_SIZE	(CONFIG_SYS_NAND_PAGE_COUNT * CONFIG_SYS_NAND_PAGE_SIZE)
 /* NAND chip page per block count  */
 #define CONFIG_SYS_NAND_PAGE_COUNT	64
 /* Location of the bad-block label */
