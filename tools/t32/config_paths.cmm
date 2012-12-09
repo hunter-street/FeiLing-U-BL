@@ -1,0 +1,33 @@
+DIALOG
+(&
+  HEADER "S1 T32 Debug Configuration"
+   
+  pos 0. 0. 42. 7.
+  BOX "Project root locations" 
+
+  pos 1. 1. 40. 1.
+  TEXT "Enter root paths to projects"
+
+  pos 1. 2. 30. 1.
+  TEXT "U-Boot Root (e.g. ~/u-boot)"
+  pos 1. 3. 40. 1.
+BOOT_PATH: EDIT "&BOOT_ROOT" ""
+  pos 1. 4. 30. 1.
+  TEXT "Out root (e.g. ~/u-boot/out)"
+  pos 1. 5. 40. 1.
+OUT_PATH: EDIT "&OUT_ROOT" ""
+
+  pos 1. 7. 12. 1.
+  DEFBUTTON "Set directories" "JUMPTO setdirs"
+  CLOSE "JUMPTO winclose"
+)
+STOP
+
+setdirs:
+  &BOOT_ROOT=DIALOG.STRING(BOOT_PATH)
+  &OUT_ROOT=DIALOG.STRING(OUT_PATH)
+  print "Configured boot path: &BOOT_ROOT"
+  print "Configured out path: &OUT_ROOT"
+winclose:
+  DIALOG.END
+  ENDDO

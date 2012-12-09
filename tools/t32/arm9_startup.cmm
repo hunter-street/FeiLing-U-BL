@@ -1,0 +1,72 @@
+;*****************************************************************************
+;**           arm9_startup.cmm                                              **
+;**           This script sets up ARM9 JTAG scan for DaisyChain mode        **
+;**                                                                         **
+;**           Changes:                                                      **
+;*****************************************************************************
+ENTRY &arg_name &arg_node_num &arg_port_num &arg_core_num
+
+local &arg_name 
+local &arg_node_num 
+local &arg_port_num
+local &arg_core_num
+GLOBAL &ERRORCODE1
+
+;choose decimal mode for input
+ radix decimal
+ setup.var %Hex.on
+ mode.hll
+ system.view
+ b.sel PROGRAM onchip
+
+;Recall and Define History File
+ autostore , history
+
+;------------------------------------------------------------------------------
+; perform daisychain specific overrides
+;------------------------------------------------------------------------------
+; select CPU and options
+SYStem.Reset
+SYStem.CPU ARM920T
+SYStem.JTAGCLOCK RTCK 
+
+SYStem.CONFIG SLAVE OFF
+SYStem.CONFIG MEMORYACCESSPORT 0.
+SYStem.CONFIG DEBUGACCESSPORT  1.
+SYStem.CONFIG JTAGACCESSPORT  2.
+SYStem.CONFIG COREJTAGPORT 4.
+SYStem.CONFIG DAPIRPOST 11.
+SYStem.CONFIG DAPDRPOST 1.
+SYStem.CONFIG DAPIRPRE 0.
+SYStem.CONFIG DAPDRPRE 0.
+
+SYStem.OPTION ENRESET ON
+SYStem.OPTION RESBREAK OFF
+system.OPTION TRST ON
+
+ETM.OFF
+
+tronchip.set fiq off
+tronchip.set irq off
+tronchip.set dabort off
+tronchip.set pabort off
+tronchip.set swi off
+tronchip.set undef off
+tronchip.set reset on
+
+; Lock out regions that we cannot access
+;MAP.DENYACCESS 0x2A040000--0x2dFFFFFF
+;MAP.DENYACCESS 0xF0000000--0xFFFFFFFF
+
+; Do some scripts
+do config_init
+;do std_intercom_init
+;do arm7_buttons.cmm
+;do groups.cmm
+
+b.sel PROGRAM onchip
+title "ARM9"
+; Here we setup menu
+;menu.reprogram menarm7.men
+
+enddo

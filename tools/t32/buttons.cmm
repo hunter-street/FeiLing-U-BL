@@ -1,0 +1,203 @@
+menu.rp
+(
+add
+toolbar
+(
+    toolitem "Configuration" 
+    (
+      do &SCRIPT_ROOT/config_paths
+    )
+[
+        3X
+     w XWw2X
+     xXWwXxX
+     XWwXxX2 2X
+     XWw2X2 XW2X
+  w  XWw2X XWw2X
+w    XW2w2XW2w2X
+w   X2W6wXxX
+w  X2W6wXxX
+w X2W2w5XxX
+wX2W2wX5xX
+X2W2wXx5X
+XW2wXxX
+2XwXxX
+ 2XxX
+2 2X
+]
+
+    toolitem "system.mode down" 
+    (
+      sys.m d
+    )
+[---------------
+ XXXX  XX    XX
+XX  XX  XX  XX
+XX       XXXX
+ XXX      XX
+    XX    XX
+XX  XX    XX
+ XXXX     XX
+                
+      XXX
+      XXX       
+      XXX       
+   XXXXXXXXX    
+    XXXXXXX     
+     XXXXX      
+      XXX       
+       X        
+]
+
+    toolitem "system.mode up" 
+    (
+      sys.m u
+    )
+[---------------
+ XXXX  XX    XX
+XX  XX  XX  XX
+XX       XXXX
+ XXX      XX
+    XX    XX
+XX  XX    XX
+ XXXX     XX
+                
+       X        
+      XXX       
+     XXXXX      
+    XXXXXXX     
+   XXXXXXXXX    
+      XXX       
+      XXX       
+      XXX
+]
+
+    toolitem "system.mode attach" 
+    (
+      sys.m a
+    )
+[---------------
+ XXXX  XX    XX
+XX  XX  XX  XX
+XX       XXXX
+ XXX      XX
+    XX    XX
+XX  XX    XX
+ XXXX     XX
+                
+      XXXX 
+     XX  XX     
+     XX  XX     
+     XXXXXX     
+     XX  XX     
+     XX  XX     
+     XX  XX     
+     
+]
+
+toolitem "Refresh configuration" 
+(
+  do arm9_startup.cmm
+)
+[
+     XX
+      XX   X
+   XXXXXX  XX
+  XXXXXXX   XX
+ XX   XX    XX 
+ XX  XX XX  XX
+ XX    XX   XX
+ XX   XXXXXXX 
+  XX  XXXXXX  
+   X   XX    
+        XX  
+ XXX  XXXX  XXXX
+X     X    X   
+X     XXX  X XX
+X     X    X   X
+ XXX  X     XXX
+]
+
+toolitem "pc++" 
+(
+  sys.m a
+  &was_running="0"
+  if run()
+  (
+    print "Is running"
+    &was_running="1"
+  	break
+  )
+
+  r.s pc register(pc)+4
+
+  if "&was_running"=="1"
+  (
+    go
+  )
+)
+[---------------
+
+ XXXXX   XXXX
+ XX  XX XX  XX 
+ XX  XX XX  
+ XXXXX  XX       
+ XX     XX  XX     
+ XX      XXXX   
+              
+                 
+   X      X      
+   X      X        
+ XXXXX  XXXXX 
+   X      X   
+   X      X      
+]
+
+toolitem "Load u-boot symbols"
+(
+  d.load.elf &OUT_ROOT/u-boot /nocode
+)
+[
+     XX
+      XX   X
+   XXXXXX  XX
+  XXXXXXX   XX
+ XX   XX    XX
+ XX  XX XX  XX
+ XX    XX   XX
+ XX   XXXXXXX
+  XX  XXXXXX
+   X   XX
+        XX
+ XX   XX XXXXXX
+ XX   XX XX   XX
+ XX   XX XXXXXX
+ XX   XX XX   XX
+   XXX   XXXXXX
+]
+
+toolitem "Load nand_spl symbols"
+(
+  d.load.elf &OUT_ROOT/nand_spl/u-boot-spl /nocode
+)
+[
+     XX
+      XX   X
+   XXXXXX  XX
+  XXXXXXX   XX
+ XX   XX    XX
+ XX  XX XX  XX
+ XX    XX   XX
+ XX   XXXXXXX
+  XX  XXXXXX
+   X   XX
+        XX
+ XXX XXX  X    
+X    X  X X  
+ XX  XXX  X    
+   X X  X X    
+XXX  XXX  XXXXX
+]
+)
+)
+enddo

@@ -1,0 +1,76 @@
+;--------------------------------------------------------------------
+; This config file requires a T32 shortcut that passes in the following
+; command line arguements
+; example shortcut call:
+; t32marm.exe -c config_usb.t32, startup.cmm DC2_SCORPION USB1  305091         1    
+;     |               |               |            |        |      |           |          
+;     V               V               V            V        V      V           V
+;                                   ${1}         ${2}     ${3}   ${4}        ${5}
+; (T32 program)  (config file)  (Startup CMM)(mode_core)(NODE)(upper port#) (core #)
+;
+; Command line argument restrictions:
+; ${1} - should be T32_core_startup.cmm
+; ${2} - can be one of the following:
+;        - BB_ARM7            (non-daisychain, ARM7 standalone)
+;        - BB_SC_c0           (SCORPION only daisychain)
+;        - BB_SC_c1           (SCORPION only daisychain)
+;        - BB_QDSP6           (non-daisychain, QDSP6 standalone)
+;        - BB_DC1_ARM7        (mode 1 ARM7, where mode 1 is ARM7 + scorpion cores on chain)
+;        - BB_DC1_SC_c0       (mode 1 scorpion core0, where mode 1 is ARM7 + scorpion cores on chain)
+;        - BB_DC1_SC_c1       (mode 1 scorpion core1, where mode 1 is ARM7 + scorpion cores on chain)
+;        - BB_DC2_ARM7        (mode 2 ARM7, where mode 2 is ARM7 + scorpion + DSP on chain) 
+;        - BB_DC2_SC_c0       (mode 2 scorpion core0, where mode 2 is ARM7 + scorpion + DSP on chain) 
+;        - BB_DC2_SC_c0       (mode 2 scorpion core1, where mode 2 is ARM7 + scorpion + DSP on chain) 
+;        - BB_DC2_QDSP6       (mode 2 QDSP6, where mode 2 is ARM7 + scorpion + DSP on chain) 
+; ${3} - The T32 node ID that you plan to connect to
+; ${4} - A unique 5 digit decimal number
+;        - used as the first 5 digits of the port ID for the session being started
+; ${5} - A single digit number (1-9) to identify a unique core ID
+;
+; So here are some examples of the 'target' on the shortcut
+; 1) For ARM7 running in mode 1:
+;    T32MARM.EXE -c config_usb.t32, startup.cmm BB_DC1_ARM7 USB1 30517 1
+; 2) For scorpion running in mode 1:
+;    T32MARM.EXE -c config_usb.t32, startup.cmm BB_DC1_SCORPION USB1 30517 2
+; 3) For ARM7 running in mode 2:
+;    T32MARM.EXE -c config_usb.t32, startup.cmm BB_DC2_ARM7 USB1 30517 1
+; 4) For scorpion running in mode 2:
+;    T32MARM.EXE -c config_usb.t32, startup.cmm BB_DC2_SCORPION USB1 30517 2
+; 5) For QDSP6 running in mode 2:
+;    T32MARM.EXE -c config_usb.t32, startup.cmm BB_DC2_QDSP6 USB1 30517 3
+; 6) For ARM7 running in non-daisychain mode (standalone)
+;    T32MARM.EXE -c config_usb.t32, startup.cmm BB_ARM7 USB1 30517 1
+; 7) For Scorpion running in non-daisychain mode (standalone; NOTE that the last argument is 1 for core number)
+;    T32MARM.EXE -c config_usb.t32, startup.cmm BB_SCORPION USB1 30517 1
+; 8) For QDSP6 running in non-daisychain mode (standalone; NOTE that the last argument is 1 for core number)
+;    T32MARM.EXE -c config_usb.t32, startup.cmm BB_QDSP6 USB1 30517 1
+;--------------------------------------------------------------------
+
+OS=
+ID=${2}_${4}_${5}    ; unique ID needed to tempory file name uniqueness
+;TMP=C:\temp          ; T32 temp file names are prepended with the unique ID above
+;SYS=~/               ; make system directory the same as the executable directory
+
+
+SCREEN=
+FONT=SMALL
+HEADER=${2}_${3}_${4}_${5}
+
+; Ethernet on Host information 
+PBI=
+USB
+;NODE=${3}    ; example: USB1
+CORE=${5}    ; CORE=1 indicates the primary core that has the trace windowsenabled
+
+
+;RCL=NETASSIST
+IC=NETASSIST
+PACKLEN=1024
+PORT=${4}
+
+;IC=NETASSIST
+;PORT=${4}    ; Used for interprocess communication (between core debug sessions) 
+             ; each session must have a unique port number
+			 
+; Printer settings
+;PRINTER=WINDOWS

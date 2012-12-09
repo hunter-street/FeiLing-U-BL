@@ -1,0 +1,21 @@
+GLOBAL &SCRIPT_ROOT
+GLOBAL &OUT_ROOT
+GLOBAL &BOOT_ROOT
+
+;&SCRIPT_ROOT=OS.PPD()+"/.."
+&SCRIPT_ROOT=OS.PPD()
+
+winclear
+menu.reset
+
+;choose hex mode for input
+radix hex
+setup.var %Hex.on
+mode.hll
+setup.tabsize 2
+
+;Recall and Define History File
+autostore , history
+
+; Execute any sub-init scripts
+do &SCRIPT_ROOT/buttons
