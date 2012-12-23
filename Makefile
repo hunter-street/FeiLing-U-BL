@@ -761,7 +761,7 @@ fl2440_config	:	unconfig
 	@echo "#define CONFIG_NAND_U_BOOT" > $(obj)include/config.h
 	@echo "CONFIG_NAND_U_BOOT = y" >> $(obj)include/config.mk
 	@if [ -z "$(findstring fl2440_noUSB_config,$@)" ]; then			\
-		echo "RAM_TEXT = 0x57e00000" >> $(obj)board/samsung/fl2440/config.tmp;\
+		echo "RAM_TEXT = 0x32000000" >> $(obj)board/samsung/fl2440/config.tmp;\
 	else										\
 		echo "RAM_TEXT = 0x32000000" >> $(obj)board/samsung/fl2440/config.tmp;\
 	fi
