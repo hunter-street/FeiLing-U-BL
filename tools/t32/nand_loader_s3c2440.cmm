@@ -67,11 +67,12 @@
   IF &progflash 
   (
   //Erase NAND FLASH Main and Bad block inforamtion
-    FLASHFILE.ERASE 0x0--0x3FFFF  /EraseBadBlocks
+    FLASHFILE.ERASE 0x0--0xFFFFF  /EraseBadBlocks
 
   //Skipped way 
    //FLASHFILE.LOAD  D:\ee\FL2440\Bootloader\目标文件\2440bootV5.1.bin 0x0 
-   FLASHFILE.LOAD  ./nand_spl/u-boot-spl-16k.bin 0x0
+   //FLASHFILE.LOAD  ./nand_spl/u-boot-spl-8kb.bin 0x0
+   FLASHFILE.LOAD  ../../out/u-boot-nand.bin 0x0
    //FLASHFILE.SAVE ./nand_spl/my_dump2.bin 0x0--0x1FFFF
    
     // ;FLASHFILE.LOADSPARE * 0x0 
