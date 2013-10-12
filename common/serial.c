@@ -80,7 +80,7 @@ void serial_initialize(void)
 #if defined(CONFIG_STUART)
 	serial_register(&serial_stuart_device);
 #endif
-#if defined(CONFIG_S3C2410)
+#if defined(CONFIG_S3C2410) || defined(CONFIG_S3C2440)
 	serial_register(&s3c24xx_serial0_device);
 	serial_register(&s3c24xx_serial1_device);
 	serial_register(&s3c24xx_serial2_device);

@@ -314,6 +314,7 @@ void board_init_f(ulong bootflag)
 	/*
 	 * Ram is setup, size stored in gd !!
 	 */
+	 gd->ram_size = gd->bd->bi_dram[0].size;
 	debug("ramsize: %08lX\n", gd->ram_size);
 #if defined(CONFIG_SYS_MEM_TOP_HIDE)
 	/*
