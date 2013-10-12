@@ -37,8 +37,7 @@
 #define CONFIG_S3C24X0		/* in a SAMSUNG S3C24x0-type SoC */
 #define CONFIG_S3C2440		/* specifically a SAMSUNG S3C2440 SoC */
 #define CONFIG_FL2440		/* on a SAMSUNG FL2440 Board */
-
-#define CONFIG_SYS_TEXT_BASE	0x0
+#define DEBUG
 
 #define CONFIG_SYS_ARM_CACHE_WRITETHROUGH
 
@@ -46,6 +45,10 @@
 #define CONFIG_SYS_CLK_FREQ	12000000 /* the SMDK2410 has 12MHz input clock */
 /* FL2440 also has 12MHz input clock */
 
+#ifndef CONFIG_NAND_SPL
+#warning HAHAHA
+#define CONFIG_SKIP_LOWLEVEL_INIT
+#endif
 
 #undef CONFIG_USE_IRQ		/* we don't need IRQ/FIQ stuff */
 
@@ -287,6 +290,5 @@
 #define CONFIG_SYS_INIT_SP_ADDR	(CONFIG_SYS_SDRAM_BASE + 0x1000 - \
 				GENERATED_GBL_DATA_SIZE)
 
-#define CONFIG_BOARD_EARLY_INIT_F
-
+//#define CONFIG_BOARD_EARLY_INIT_F
 #endif /* __CONFIG_H */
